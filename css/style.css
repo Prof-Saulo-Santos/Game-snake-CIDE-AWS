@@ -1,0 +1,225 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #0a0a0f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  /* dynamic viewport height (mobile-safe) */
+  padding: 12px 8px;
+  font-family: 'Orbitron', sans-serif;
+  color: #fff;
+  overflow: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, #0d1b2a 0%, #0a0a0f 70%);
+  z-index: -1;
+}
+
+/* ── Título ── */
+h1 {
+  font-size: clamp(1.2rem, 5vw, 2.5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #00ff88, #00ccff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+  letter-spacing: clamp(2px, 1vw, 4px);
+}
+
+/* ── Placar ── */
+#scoreboard {
+  display: flex;
+  gap: clamp(16px, 5vw, 40px);
+  margin-bottom: clamp(8px, 2vh, 20px);
+}
+
+.score-box {
+  text-align: center;
+}
+
+.score-label {
+  font-size: clamp(0.5rem, 1.8vw, 0.65rem);
+  color: #888;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.score-value {
+  font-size: clamp(1.1rem, 4vw, 1.8rem);
+  font-weight: 700;
+  color: #00ff88;
+}
+
+/* ── Wrapper do Canvas ── */
+#game-wrapper {
+  position: relative;
+  border-radius: 12px;
+  padding: 4px;
+  background: linear-gradient(135deg, #00ff88, #00ccff, #ff00aa);
+  box-shadow: 0 0 40px rgba(0, 255, 136, 0.3), 0 0 80px rgba(0, 204, 255, 0.1);
+  /* tamanho controlado pelo JS via canvas */
+  flex-shrink: 0;
+}
+
+canvas {
+  display: block;
+  border-radius: 9px;
+  background: #070d14;
+}
+
+/* ── Overlay (início / game over) ── */
+#overlay {
+  position: absolute;
+  inset: 4px;
+  border-radius: 9px;
+  background: rgba(7, 13, 20, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 2vh, 16px);
+  transition: opacity 0.3s;
+}
+
+#overlay.hidden {
+  display: none;
+}
+
+#overlay h2 {
+  font-size: clamp(1rem, 4vw, 1.8rem);
+  color: #ff4466;
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+#overlay p {
+  color: #aaa;
+  font-size: clamp(0.55rem, 2vw, 0.75rem);
+  letter-spacing: 2px;
+  text-align: center;
+  padding: 0 12px;
+}
+
+#overlay .final-score {
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  color: #00ff88;
+}
+
+/* ── Botão principal ── */
+button {
+  background: linear-gradient(135deg, #00ff88, #00ccff);
+  border: none;
+  border-radius: 8px;
+  padding: clamp(8px, 2vw, 12px) clamp(20px, 6vw, 36px);
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(0.65rem, 2.5vw, 0.9rem);
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  touch-action: manipulation;
+  /* evita delay de 300ms no mobile */
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* ── Controles Mobile ── */
+#controls {
+  margin-top: clamp(8px, 2vh, 20px);
+  display: grid;
+  grid-template-columns: repeat(3, clamp(40px, 11vw, 52px));
+  gap: clamp(4px, 1vw, 8px);
+}
+
+.ctrl-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0;
+  width: clamp(40px, 11vw, 52px);
+  height: clamp(40px, 11vw, 52px);
+  font-family: inherit;
+  font-size: clamp(0.9rem, 3vw, 1.2rem);
+  color: #aaa;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.ctrl-btn:hover,
+.ctrl-btn:active {
+  background: rgba(0, 255, 136, 0.15);
+  color: #00ff88;
+}
+
+.ctrl-btn.empty {
+  visibility: hidden;
+}
+
+/* ── Dica de velocidade ── */
+#speed-info {
+  margin-top: clamp(6px, 1.5vh, 12px);
+  font-size: clamp(0.5rem, 1.8vw, 0.65rem);
+  color: #555;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* ── Media: telas muito pequenas (< 360px) ── */
+@media (max-width: 359px) {
+  #scoreboard {
+    gap: 12px;
+  }
+
+  .score-label {
+    letter-spacing: 1px;
+  }
+}
+
+/* ── Media: landscape em mobile ── */
+@media (max-height: 500px) and (orientation: landscape) {
+  h1 {
+    display: none;
+  }
+
+  /* esconde título para ganhar espaço */
+  #speed-info {
+    display: none;
+  }
+
+  body {
+    justify-content: flex-start;
+    padding-top: 4px;
+  }
+}

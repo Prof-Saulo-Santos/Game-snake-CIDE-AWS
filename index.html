@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐍 Snake Game</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <h1>SNAKE</h1>
+
+  <!-- Placar -->
+  <div id="scoreboard">
+    <div class="score-box">
+      <div class="score-label">Score</div>
+      <div class="score-value" id="score">0</div>
+    </div>
+    <div class="score-box">
+      <div class="score-label">Best</div>
+      <div class="score-value" id="best">0</div>
+    </div>
+    <div class="score-box">
+      <div class="score-label">Level</div>
+      <div class="score-value" id="level">1</div>
+    </div>
+  </div>
+
+  <!-- Área do Jogo -->
+  <div id="game-wrapper">
+    <canvas id="canvas" width="400" height="400"></canvas>
+
+    <!-- Tela de sobreposição (início / game over) -->
+    <div id="overlay">
+      <h2 id="overlay-title">SNAKE GAME</h2>
+      <p id="overlay-sub">USE AS SETAS DO TECLADO PARA JOGAR</p>
+      <div class="final-score" id="overlay-score" style="display:none"></div>
+      <button id="start-btn">INICIAR</button>
+    </div>
+  </div>
+
+  <!-- Controles Mobile -->
+  <div id="controls">
+    <div class="ctrl-btn empty"></div>
+    <button class="ctrl-btn" id="btn-up">▲</button>
+    <div class="ctrl-btn empty"></div>
+    <button class="ctrl-btn" id="btn-left">◄</button>
+    <button class="ctrl-btn" id="btn-down">▼</button>
+    <button class="ctrl-btn" id="btn-right">►</button>
+  </div>
+
+  <div id="speed-info">VELOCIDADE AUMENTA A CADA 5 PONTOS</div>
+
+  <script type="module" src="/js/game.js"></script>
+</body>
+
+</html>
